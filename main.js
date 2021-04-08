@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     //0
-    const player1 = {
+    let player1 = {
         name: 'SCORPION',
         hp: 100,
         img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             console.log(`${this.name} + ‘Fight...`)
         }
     };
-    const player2 = {
+    let player2 = {
         name: 'SUB-ZERO',
         hp: 100,
         img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
@@ -23,22 +23,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
     //1
     function createPlayer(playerName, playerObj) {
 
-        let player = document.createElement('div');
+        const player = document.createElement('div');
         player.classList.add(playerName);
 
-        let player_progressbar = document.createElement('div');
+        const player_progressbar = document.createElement('div');
         player_progressbar.classList.add('progressbar');
 
-        let player_character = document.createElement('div');
+        const player_character = document.createElement('div');
         player_character.classList.add('character');
 
-        let player_live = document.createElement('div');
+        const player_live = document.createElement('div');
         player_live.classList.add(playerObj.hp);
 
-        let player_name = document.createElement('div');
+        const player_name = document.createElement('div');
         player_name.classList.add(playerObj.name);
 
-        let player_img = document.createElement('img');
+        const player_img = document.createElement('img');
         player_img.setAttribute('src', playerObj.img);
 
         player_progressbar.appendChild(player_live);

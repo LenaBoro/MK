@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    let player_wins = '';
+    let player_wins = player1.name;
 
 
     function createElement(tag, classNameTag) {
@@ -60,27 +60,26 @@ document.addEventListener("DOMContentLoaded", function () {
         return Math.ceil(Math.random() * (max - min) + min);
     }
 
-    function changeHp(playerObj1, playerObj2) {
-        const player_life1 = document.querySelector('.player' + playerObj1.player + ' .life');
-        const player_life2 = document.querySelector('.player' + playerObj2.player + ' .life');
+    function changeHp(playerObj) {
+        const player_life = document.querySelector('.player' + playerObj.player + ' .life');
 
-        if (playerObj1.hp > 0 && playerObj2.hp > 0) {
-            playerObj1.hp -= getRandomInt(1, 20);
-            playerObj2.hp -= getRandomInt(1, 20);
-            player_life1.style.width = playerObj1.hp + '%';
-            player_life2.style.width = playerObj2.hp + '%';
+        if (playerObj.hp > 0) {
+            playerObj.hp -= getRandomInt(1, 20);
+            player_life.style.width = playerObj.hp + '%';
         } else {
             btn_random.disabled = true;
-            if (playerObj2.hp > playerObj1.hp) {
-                player_wins = playerObj2.name;
-                player_life1.style.width = 0 + '%';
-            } else {
-                player_wins = playerObj1.name;
-                player_life2.style.width = 0 + '%';
-            }
+            player_life.style.width = 0 + '%';
 
-            arena.appendChild(playerWin(player_wins))
+            comparePlayerHp(player1, player2);
         }
+    }
+
+    function comparePlayerHp(playerObj1, playerObj2) {
+        if (playerObj2.hp > playerObj1.hp) {
+            player_wins = playerObj2.name;
+        }
+
+        arena.appendChild(playerWin(player_wins))
     }
 
     function playerLose(name) {
@@ -102,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     btn_random.addEventListener('click', function () {
-        changeHp(player1, player2);
+        changeHp(player1);
+        changeHp(player2);
     })
 });

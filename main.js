@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const arena = document.querySelector('.arenas');
     const btn_random = document.querySelector('.button');
+    const btn_restart = document.querySelector('.button-restart');
+
     let player1 = {
         player: 1,
         name: 'SCORPION',
@@ -9,7 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
         weapon: ['1', '2', '3', '4'],
         attack: function () {
             console.log(`${this.name} + ‘Fight...`)
-        }
+        },
+        changeHP: changeHP,
+        elHP: elHP,
+        renderHP: renderHP,
     };
     let player2 = {
         player: 2,
@@ -19,11 +24,31 @@ document.addEventListener("DOMContentLoaded", function () {
         weapon: ['1', '2', '3', '4'],
         attack: function () {
             console.log(`${this.name} + ‘Fight...`)
-        }
+        },
+        changeHP: changeHP,
+        elHP: elHP,
+        renderHP: renderHP,
     };
 
-    let player_wins = player1.name;
+    //changeHP
+    function changeHP(randomInt) {
+        if (this.hp > 0) {
+            this.hp -= randomInt;
+        } else {
+            this.hp = 0;
+        }
+    }
 
+    //elHP
+    function elHP() {
+        let class_player = '.player' + this.player;
+        return document.querySelector(class_player + ' .life');
+    }
+
+    //renderHP
+    function renderHP(el) {
+        return el.style.width = this.hp + '%';
+    }
 
     function createElement(tag, classNameTag) {
         const element = document.createElement(tag);
@@ -31,6 +56,17 @@ document.addEventListener("DOMContentLoaded", function () {
             element.classList.add(classNameTag);
         }
         return element;
+    }
+
+    function createReloadButton() {
+        const btn_block = createElement('div', 'reloadWrap');
+        const btn = createElement('button', 'button-restart');
+
+        btn.innerText = 'Restart';
+        btn.setAttribute('onclick', 'window.location.reload()');
+        btn_block.appendChild(btn);
+
+        return btn_block;
     }
 
     function createPlayer(playerObj) {
@@ -60,27 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return Math.ceil(Math.random() * (max - min) + min);
     }
 
-    function changeHp(playerObj) {
-        const player_life = document.querySelector('.player' + playerObj.player + ' .life');
-
-        if (playerObj.hp > 0) {
-            playerObj.hp -= getRandomInt(1, 20);
-            player_life.style.width = playerObj.hp + '%';
-        } else {
-            btn_random.disabled = true;
-            player_life.style.width = 0 + '%';
-
-            comparePlayerHp(player1, player2);
-        }
-    }
-
-    function comparePlayerHp(playerObj1, playerObj2) {
-        if (playerObj2.hp > playerObj1.hp) {
-            player_wins = playerObj2.name;
-        }
-
-        arena.appendChild(playerWin(player_wins))
-    }
 
     function playerLose(name) {
         const lose_block = createElement('div', 'loseTitle');
@@ -91,7 +106,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function playerWin(name) {
         const win_block = createElement('div', 'winTitle');
-        win_block.innerHTML = name + ' wins!';
+        if (name) {
+            win_block.innerHTML = name + ' wins!';
+        } else {
+            win_block.innerHTML = 'draws';
+        }
 
         return win_block;
     }
@@ -99,9 +118,24 @@ document.addEventListener("DOMContentLoaded", function () {
     arena.appendChild(createPlayer(player1));
     arena.appendChild(createPlayer(player2));
 
-
     btn_random.addEventListener('click', function () {
-        changeHp(player1);
-        changeHp(player2);
-    })
+        player1.changeHP(getRandomInt(1, 20));
+        player2.changeHP(getRandomInt(1, 20));
+        player1.renderHP(player1.elHP());
+        player2.renderHP(player2.elHP());
+
+        if (player1.hp <= 0 || player2.hp <= 0) {
+            btn_random.disabled = true;
+
+            if (player1.hp > player2.hp) {
+                arena.appendChild(playerWin(player1.name))
+            } else if (player1.hp < player2.hp) {
+                arena.appendChild(playerWin(player2.name))
+            } else {
+                arena.appendChild(playerWin())
+            }
+            arena.appendChild(createReloadButton());
+        }
+
+    });
 });

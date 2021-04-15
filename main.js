@@ -177,10 +177,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        if (choose_hit === enemyAttack(getRandomInt(1, 3) - 1).defence ||
-            choose_defence === enemyAttack(getRandomInt(1, 3) - 1).hit) {
-            return false;
-        } else {
+        if (choose_hit !== enemyAttack(getRandomInt(1, 3) - 1).defence ||
+            choose_defence !== enemyAttack(getRandomInt(1, 3) - 1).hit) {
             player1.changeHP(getRandomInt(1, 20));
             player2.changeHP(getRandomInt(1, 20));
             player1.renderHP(player1.elHP());

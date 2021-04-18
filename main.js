@@ -1,7 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     const arena = document.querySelector('.arenas');
-    const btn_random = document.querySelector('.button');
+    const btn_submit = document.querySelector('.btn-submit');
     const btn_restart = document.querySelector('.button-restart');
+
+    const HIT = {
+        head: 30,
+        body: 25,
+        foot: 20,
+    };
+    const ATTACK = ['head', 'body', 'foot'];
 
     let player1 = {
         player: 1,
@@ -9,12 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
         hp: 100,
         img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
         weapon: ['1', '2', '3', '4'],
-        attack: function () {
-            console.log(`${this.name} + ‘Fight...`)
-        },
-        changeHP: changeHP,
-        elHP: elHP,
-        renderHP: renderHP,
+        attack,
+        changeHP,
+        elHP,
+        renderHP,
     };
     let player2 = {
         player: 2,
@@ -22,17 +27,19 @@ document.addEventListener("DOMContentLoaded", function () {
         hp: 100,
         img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
         weapon: ['1', '2', '3', '4'],
-        attack: function () {
-            console.log(`${this.name} + ‘Fight...`)
-        },
-        changeHP: changeHP,
-        elHP: elHP,
-        renderHP: renderHP,
+        attack,
+        changeHP,
+        elHP,
+        renderHP,
     };
+
+    function attack() {
+        console.log(`${this.name} + ‘Fight...`)
+    }
 
     //changeHP
     function changeHP(randomInt) {
-        if (this.hp > 0) {
+        if (this.hp >= 0) {
             this.hp -= randomInt;
         } else {
             this.hp = 0;
@@ -48,6 +55,18 @@ document.addEventListener("DOMContentLoaded", function () {
     //renderHP
     function renderHP(el) {
         return el.style.width = this.hp + '%';
+    }
+
+//enemyAttack
+
+    function enemyAttack(randomInit) {
+        let hit = ATTACK[randomInit];
+        let defence = ATTACK[randomInit];
+        return {
+            value: HIT[randomInit],
+            hit: hit,
+            defence: defence,
+        }
     }
 
     function createElement(tag, classNameTag) {
@@ -96,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return Math.ceil(Math.random() * (max - min) + min);
     }
 
-
     function playerLose(name) {
         const lose_block = createElement('div', 'loseTitle');
         lose_block.innerHTML = name + ' lose!';
@@ -118,14 +136,57 @@ document.addEventListener("DOMContentLoaded", function () {
     arena.appendChild(createPlayer(player1));
     arena.appendChild(createPlayer(player2));
 
-    btn_random.addEventListener('click', function () {
-        player1.changeHP(getRandomInt(1, 20));
-        player2.changeHP(getRandomInt(1, 20));
-        player1.renderHP(player1.elHP());
-        player2.renderHP(player2.elHP());
+    // btn_random.addEventListener('click', function () {
+    //     player1.changeHP(getRandomInt(1, 20));
+    //     player2.changeHP(getRandomInt(1, 20));
+    //     player1.renderHP(player1.elHP());
+    //     player2.renderHP(player2.elHP());
+    //
+    //     if (player1.hp <= 0 || player2.hp <= 0) {
+    //         // btn_random.disabled = true;
+    //
+    //         if (player1.hp > player2.hp) {
+    //             arena.appendChild(playerWin(player1.name))
+    //         } else if (player1.hp < player2.hp) {
+    //             arena.appendChild(playerWin(player2.name))
+    //         } else {
+    //             arena.appendChild(playerWin())
+    //         }
+    //    //     arena.appendChild(createReloadButton());
+    //     }
+    //
+    // });
 
+
+    btn_submit.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        let radio_hit = document.querySelectorAll('input[name="hit"]');
+        let radio_defence = document.querySelectorAll('input[name="defence"]');
+
+        let choose_hit = '';
+        let choose_defence = '';
+
+        for (let i = 0; i < radio_hit.length; i++) {
+            if (radio_hit[i].checked) {
+                choose_hit = radio_hit[i].value;
+            }
+
+            if (radio_defence[i].checked) {
+                choose_defence = radio_hit[i].value;
+            }
+        }
+
+        if (choose_hit !== enemyAttack(getRandomInt(1, 3) - 1).defence ||
+            choose_defence !== enemyAttack(getRandomInt(1, 3) - 1).hit) {
+            player1.changeHP(getRandomInt(1, 20));
+            player2.changeHP(getRandomInt(1, 20));
+            player1.renderHP(player1.elHP());
+            player2.renderHP(player2.elHP());
+
+        }
         if (player1.hp <= 0 || player2.hp <= 0) {
-            btn_random.disabled = true;
+            btn_submit.disabled = true;
 
             if (player1.hp > player2.hp) {
                 arena.appendChild(playerWin(player1.name))
@@ -134,8 +195,10 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 arena.appendChild(playerWin())
             }
-            arena.appendChild(createReloadButton());
+              arena.appendChild(createReloadButton());
         }
 
-    });
+
+    })
+
 });

@@ -242,6 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
             default:
                 console.log(`Sorry, we are out of ${type}.`);
+                break;
         }
 
         const el = `<p>${text_log}</p>`;

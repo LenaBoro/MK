@@ -1,5 +1,5 @@
-import {getRandomInt} from "./generateRandomInt.js";
-import {createTime} from "./createCurrentTime.js";
+import {getRandomInt} from "./utils/generateRandomInt.js";
+import {createTime} from "./utils/createCurrentTime.js";
 
 export const logs = {
     start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',

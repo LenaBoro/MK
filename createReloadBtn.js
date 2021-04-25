@@ -1,4 +1,4 @@
-import {createElement} from "./createElement.js";
+import {createElement} from "./utils/createElement.js";
 
 export const createReloadButton = () => {
     const btn_block = createElement('div', 'reloadWrap');

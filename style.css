@@ -10,32 +10,9 @@
     font-display: swap;
 }
 
-
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-}
-
-html {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-color: #424542;
-    margin: 0;
-    padding: 0;
-}
-
 .root {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
     position: relative;
-    background: #424466;
+
 }
 
 .wall-left {
@@ -74,6 +51,9 @@ body {
     background-repeat: no-repeat;
     position: relative;
     display: flex;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .arenas.arena1 {
@@ -97,7 +77,8 @@ body {
 }
 
 .player1,
-.player2 {
+.player2,
+.avatar2 {
     width: 50%;
     position: relative;
 }
@@ -180,6 +161,8 @@ body {
     overflow: scroll;
     color: white;
     font-family: Arial;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .character {
@@ -197,6 +180,7 @@ body {
     right: 60px;
 }
 
+.avatar2 img,
 .player2 .character img {
     transform: scaleX(-1) translate(50%, 0);
 }
@@ -241,6 +225,7 @@ body {
     font-family: "Mortal Kombat 3";
     outline: none;
 }
+
 .button::after {
     content: "";
     position: absolute;
@@ -252,12 +237,15 @@ body {
     border-radius: 4px;
     z-index: -1;
 }
+
 .button:hover {
     background-color: #f5d100;
 }
+
 .button:active {
     top: 2px;
 }
+
 .button:active::after {
     top: 1px;
 }
@@ -363,12 +351,15 @@ form:invalid button[class=button]:active::after {
     justify-content: space-between;
     color: #efefef;
 }
+
 .ul label {
     cursor: pointer;
 }
+
 .ul label:nth-of-type(2) {
     margin: 0 -4.5px;
 }
+
 .ul label span {
     position: relative;
     display: inline-block;
@@ -379,6 +370,7 @@ form:invalid button[class=button]:active::after {
     text-align: center;
     margin-top: -3px;
 }
+
 .ul label span::before {
     position: relative;
     display: block;
@@ -390,6 +382,7 @@ form:invalid button[class=button]:active::after {
     margin-bottom: -50px;
     transition: 0.3s;
 }
+
 .ul label span:hover {
     background-color: rgba(107, 185, 240, 0.2);
 }
@@ -397,15 +390,232 @@ form:invalid button[class=button]:active::after {
 input {
     display: none;
 }
+
 input[type=radio]:checked + label > span {
     color: #fff;
     font-weight: 700;
     text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
 }
+
 input[type=radio]:checked + label > span::before {
     background: #f5d100;
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
 }
+
 input[type=radio]:checked + label > span:hover {
     background: none;
+}
+
+
+.popup {
+    position: fixed;
+    background: black;
+    z-index: 99999;
+    height: 100vh;
+    width: 100%;
+
+}
+
+
+.popup .player {
+    position: absolute;
+    width: 210px;
+    height: 367px;
+    z-index: 3;
+    bottom: 44px;
+    left: 50%;
+    margin-left: -105px;
+    transform: translate(-205%, 0px);
+}
+
+
+.popup .avatar img {
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+}
+
+.avatar1 {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.avatar2 {
+    display: inline-block;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.popup .parent {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+}
+
+
+.popup .div1 {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.popup .div2 {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.popup .div3 {
+    grid-area: 1 / 3 / 2 / 4;
+}
+
+.popup .div4 {
+    grid-area: 1 / 4 / 2 / 5;
+}
+
+.popup .div5 {
+    grid-area: 1 / 5 / 2 / 6;
+}
+
+.popup .div6 {
+    grid-area: 1 / 6 / 2 / 7;
+}
+
+.popup .div7 {
+    grid-area: 1 / 7 / 2 / 8;
+}
+
+.popup .div8 {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.popup .div9 {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.popup .div10 {
+    grid-area: 2 / 3 / 3 / 4;
+}
+
+.popup .div11 {
+    grid-area: 2 / 4 / 3 / 5;
+}
+
+.div12 {
+    grid-area: 2 / 5 / 3 / 6;
+}
+
+.div13 {
+    grid-area: 2 / 6 / 3 / 7;
+}
+
+.div14 {
+    grid-area: 2 / 7 / 3 / 8;
+}
+
+.div15 {
+    grid-area: 3 / 2 / 4 / 3;
+}
+
+.div16 {
+    grid-area: 3 / 3 / 4 / 4;
+}
+
+.div17 {
+    grid-area: 3 / 4 / 4 / 5;
+}
+
+.div18 {
+    grid-area: 3 / 5 / 4 / 6;
+}
+
+.div19 {
+    grid-area: 3 / 6 / 4 / 7;
+}
+
+.div20 {
+    grid-area: 4 / 2 / 5 / 3;
+}
+
+.div21 {
+    grid-area: 4 / 3 / 5 / 4;
+}
+
+.div22 {
+    grid-area: 4 / 4 / 5 / 5;
+}
+
+.div23 {
+    grid-area: 4 / 5 / 5 / 6;
+}
+
+.div24 {
+    grid-area: 4 / 6 / 5 / 7;
+}
+
+.row {
+    display: flex;
+    position: relative;
+    z-index: 1;
+}
+
+.row:hover {
+    z-index: 2;
+}
+
+.popup .character {
+    width: 137px;
+    height: 176px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+}
+
+
+.popup .character:hover,
+.popup .character.active {
+    z-index: 2;
+}
+
+
+.popup .character:hover:before,
+.character.active:before {
+    content: "";
+    display: block;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    top: -2px;
+    left: -2px;
+    position: absolute;
+    border: 14px solid #21aa21;
+}
+
+.character.disabled {
+    cursor: default;
+}
+
+.character.disabled:hover:before {
+    display: none;
+}
+
+.character img {
+    width: 100%;
+}
+
+
+.avatar2 {
+    position: relative;
+    width: 200px;
+    text-align: right;
+    left: 78%;
+}
+
+.player-avatar {
+    position: absolute;
+    display: inline;
+    width: 200px;
+    text-align: center;
+    left: 45%;
+    bottom: -50px;
+    height: 200px;
+    z-index:10;
 }

@@ -1,4 +1,4 @@
-import {createElement} from "./createElement.js";
+import {createElement} from "./utils/createElement.js";
 
 export function playerLose(name) {
     const lose_block = createElement('div', 'loseTitle');

@@ -1,17 +1,3 @@
-import { HIT} from "./players.js";
-
-export const ATTACK = ['head', 'body', 'foot'];
-
-export function enemyAttack(randomInit) {
-    let hit = ATTACK[randomInit];
-    let defence = ATTACK[randomInit];
-    return {
-        value: HIT[randomInit],
-        hit: hit,
-        defence: defence,
-    }
-}
-
 export function playerAttack() {
     let attack = {};
     let radio_hit = document.querySelectorAll('input[name="hit"]');

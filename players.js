@@ -1,10 +1,7 @@
 import {createElement} from "./utils/createElement.js";
+import {generateLogs} from "./logs.js";
 
-export const HIT = {
-    head: 30,
-    body: 25,
-    foot: 20,
-};
+const chat = document.querySelector('.chat');
 
 export class Player {
     constructor(props) {
@@ -40,18 +37,6 @@ export class Player {
         return player;
     };
 
-    attack = () => {
-        console.log(`${this.name} + ‘Fight...`)
-    };
-
-    changeHP = (randomInt) => {
-        if (this.hp >= 0) {
-            this.hp -= randomInt;
-        } else {
-            this.hp = 0;
-        }
-    };
-
     elHP = () => {
         let class_player = '.player' + this.player;
         return document.querySelector(class_player + ' .life');
@@ -59,7 +44,39 @@ export class Player {
 
     renderHP = () => {
         return this.elHP().style.width = this.hp + '%';
+
+
     };
+    changeHP = (value) => {
+        if (this.hp >= 0) {
+            this.hp -= value;
+        } else {
+            this.hp = 0;
+        }
+    };
+
+    chHp({hit: hit, defence: defence, player1, player2}) {
+        (async () => {
+            const rawResponse = await fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
+                method: 'POST',
+                body: JSON.stringify({
+                    hit: hit,
+                    defence: defence,
+                })
+            });
+
+            const content = await rawResponse.json();
+            if (content.player1.hit !== content.player2.defence) {
+                player1.changeHP(content.player1.value);
+                generateLogs('hit', player1, player2, chat);
+            }
+            if (content.player1.defence !== content.player2.hit) {
+                player2.changeHP(content.player1.value);
+                generateLogs('defence', player1, player2, chat);
+            }
+
+        })();
+    }
 
 
 }
